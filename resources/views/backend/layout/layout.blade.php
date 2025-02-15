@@ -6,9 +6,19 @@
         <title>Wiki</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
-        <div class="container gap-10 flex flex-col px-6 py-10 mx-auto lg:flex-row">
-            @yield('content')
+    <body class="bg-gray-100 font-sans text-gray-800">
+        <div class="flex h-screen">
+            <div class="w-64 bg-gray-800 text-white p-5">
+                <ul>
+                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 1</a></li>
+                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 2</a></li>
+                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 3</a></li>
+                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 4</a></li>
+                </ul>
+            </div>
+            <div class="flex-1 p-8">
+                @yield('content')
+            </div>
         </div>
     </body>
 </html>

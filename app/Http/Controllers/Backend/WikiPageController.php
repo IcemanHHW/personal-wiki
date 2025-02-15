@@ -21,7 +21,9 @@ class WikiPageController extends Controller
      */
     public function index()
     {
-        return view('backend.wikiPage.index');
+        $wikiPages = WikiPage::query()->get();
+
+        return view('backend.wikiPage.index', compact('wikiPages'));
     }
 
     /**
