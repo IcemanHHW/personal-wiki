@@ -2,8 +2,8 @@
 
 @section('content')
     @include('backend.wikiPage.partials.form', [
-    'action' => route('wiki-pages.store'),
-    'method' => 'POST',
-    'data' => null,
+    'action' => route('wiki-pages.update'),
+    'method' => 'patch',
+    'data' => $wikiPage,
 ])
 @endsection

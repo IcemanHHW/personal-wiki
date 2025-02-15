@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->string('image_path');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
             $table->softDeletes();
         });

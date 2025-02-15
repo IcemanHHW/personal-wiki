@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -20,4 +21,48 @@ class WikiPage extends Model
     use SoftDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (self $wikiPage) {
+            if ($wikiPage->isDirty('title')) {
+                $wikiPage->slug = static::generateUniqueSlug($wikiPage->title, $wikiPage->id);
+            }
+        });
+    }
+
+    /**
+     * Generate a unique slug based on the title and existing slugs
+     *
+     * @param string $title
+     * @param int|null $pageId
+     * @return string
+     */
+    protected static function generateUniqueSlug(string $title, int $pageId = null): string
+    {
+        $slug = Str::slug($title);
+        $query = static::where('slug', 'LIKE', "{$slug}%");
+
+        if ($pageId) {
+            $query->where('id', '!=', $pageId);
+        }
+
+        $count = $query->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
+    }
+
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
 }
