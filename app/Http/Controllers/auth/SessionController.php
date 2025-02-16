@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
-class LoginController extends Controller
+class SessionController extends Controller
 {
     /**
      * Display the login view.
+     * @return View
      */
     public function create(): View
     {
@@ -21,6 +22,8 @@ class LoginController extends Controller
 
     /**
      * Handle an incoming authentication request.
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request) : RedirectResponse
     {
@@ -29,7 +32,7 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (! Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             throw ValidationException::withMessages([
                 'username' => 'Je gebruikersnaam of wachtwoord is incorrect'
             ]);
@@ -42,6 +45,8 @@ class LoginController extends Controller
 
     /**
      * Destroy an authenticated session.
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function destroy(Request $request) : RedirectResponse
     {

@@ -13,7 +13,12 @@
                     <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 1</a></li>
                     <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 2</a></li>
                     <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 3</a></li>
-                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 4</a></li>
+                    <li class="mb-4">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="hover:bg-gray-700 p-2 rounded">Uitloggen</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
             <div class="flex-1 p-8">
