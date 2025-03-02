@@ -44,13 +44,19 @@ class WikiPageController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $data = $request->validate([
+            'is_featured' => ['boolean'],
             'title' => ['required', 'string'],
-            'image_path' => ['required', 'image'],
+            'main_image' => ['required', 'image'],
             'content' => ['required'],
         ]);
 
         try {
-            $data['image_path'] = $request->file('image_path')->store('wikiPage-images', 'public');
+            if ($request->input('is_featured')) {
+                WikiPage::where('is_featured', true)->update(['is_featured' => false]);
+                $data['is_featured'] = true;
+            }
+
+            $data['main_image'] = $request->file('main_image')->store('wikiPage-images', 'public');
 
             WikiPage::query()->create($data);
 
@@ -82,17 +88,23 @@ class WikiPageController extends Controller
     public function update(Request $request, WikiPage $wikiPage) : RedirectResponse
     {
         $data = $request->validate([
+            'is_featured' => ['boolean'],
             'title' => ['required', 'string'],
-            'image_path' => ['nullable', 'image'],
+            'main_image' => ['nullable', 'image'],
             'content' => ['required'],
         ]);
 
         try {
-            if ($request->hasFile('image_path')) {
-                if ($wikiPage->image_path) {
-                    Storage::disk('public')->delete($wikiPage->image_path);
+            if ($request->input('is_featured')) {
+                WikiPage::where('is_featured', true)->update(['is_featured' => false]);
+                $data['is_featured'] = true;
+            }
+
+            if ($request->hasFile('main_image')) {
+                if ($wikiPage->main_image) {
+                    Storage::disk('public')->delete($wikiPage->main_image);
                 }
-                $data['image_path'] = $request->file('image_path')->store('wikiPage-images', 'public');
+                $data['main_image'] = $request->file('main_image')->store('wikiPage-images', 'public');
             }
 
             $wikiPage->update($data);

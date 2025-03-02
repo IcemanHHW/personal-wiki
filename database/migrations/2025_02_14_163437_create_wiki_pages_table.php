@@ -11,8 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('image_path');
+            $table->string('main_image');
             $table->text('content');
+            $table->boolean('is_featured')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

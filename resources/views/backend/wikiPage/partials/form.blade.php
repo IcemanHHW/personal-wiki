@@ -14,6 +14,18 @@
         @method($method)
     @endif
     <div>
+        <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900">Uitgelicht</label>
+        <input type="hidden" name="is_featured" value="0" />
+        <input
+            type="checkbox"
+            name="is_featured"
+            id="is_featured"
+            value="1"
+            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+            {{ old('is_featured', $data->is_featured) ? 'checked' : '' }}
+        />
+    </div>
+    <div>
         <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Titel</label>
         <input
             type="text"
@@ -25,15 +37,15 @@
         />
     </div>
     <div>
-        <label for="image_path" class="block mb-2 text-sm font-medium text-gray-900">Afbeelding</label>
-        @if (!empty($data?->image_path))
+        <label for="main_image" class="block mb-2 text-sm font-medium text-gray-900">Afbeelding</label>
+        @if (!empty($data?->main_image))
             <div class="mb-3">
-                <img src="{{ asset('storage/' . $data->image_path) }}" alt="Huidige afbeelding" class="w-32 h-32 object-cover rounded">
+                <img src="{{ asset('storage/' . $data->main_image) }}" alt="Huidige afbeelding" class="w-32 h-32 object-cover rounded">
             </div>
         @endif
         <input
-            id="image_path"
-            name="image_path"
+            id="main_image"
+            name="main_image"
             type="file"
             class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         />
@@ -50,7 +62,7 @@
     <div>
         <button
             type="submit"
-            class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none"
+            class="bg-blue-500 text-white py-2 px-6 rounded-lg cursor-pointer hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 focus:outline-none"
         >
             Submit
         </button>

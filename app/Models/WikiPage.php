@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property string $image_path
+ * @property string $main_image
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -63,6 +64,17 @@ class WikiPage extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Scope a query to only include the featured article.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeFeatured(Builder $query) : Builder
+    {
+        return $query->where('is_featured', true);
     }
 
 }
