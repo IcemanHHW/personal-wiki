@@ -6,7 +6,7 @@ use App\Http\Controllers\Backend\WikiPageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
+    return view('site.index');
 });
 
 Route::middleware('guest')->group(function () {
