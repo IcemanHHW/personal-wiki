@@ -61,10 +61,11 @@ class WikiPageController extends Controller
             WikiPage::query()->create($data);
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+            logger($e);
+            return redirect()->back()->with('error', 'Er is een fout opgetreden bij het opslaan van de pagina.');
         }
 
-        return redirect()->route('wiki-pages.index');
+        return redirect()->route('wiki-pages.index')->with('success', 'Wiki pagina succesvol aangemaakt!');
     }
 
     /**
@@ -110,10 +111,11 @@ class WikiPageController extends Controller
             $wikiPage->update($data);
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+            logger($e);
+            return redirect()->back()->with('error', 'Er is een fout opgetreden bij het bijwerken van de pagina.');
         }
 
-        return redirect()->route('wiki-pages.index');
+        return redirect()->route('wiki-pages.index')->with('success',  $wikiPage->title .' succesvol bijgewerkt!');
     }
 
     /**
@@ -124,8 +126,9 @@ class WikiPageController extends Controller
      */
     public function destroy(WikiPage $wikiPage): RedirectResponse
     {
+        $title = $wikiPage->title;
         $wikiPage->delete();
 
-        return redirect()->route('wiki-pages.index');
+        return redirect()->route('wiki-pages.index')->with('success', $title . ' succesvol verwijderd!');
     }
 }

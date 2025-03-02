@@ -22,7 +22,7 @@
             id="is_featured"
             value="1"
             class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-            {{ old('is_featured', $data->is_featured) ? 'checked' : '' }}
+            {{ old('is_featured', $data->is_featured ?? false) ? 'checked' : '' }}
         />
     </div>
     <div>

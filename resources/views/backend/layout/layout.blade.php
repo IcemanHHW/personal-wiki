@@ -22,8 +22,33 @@
                 </ul>
             </div>
             <div class="flex-1 p-8">
+                @if (session('success') || session('error'))
+                    <div class="space-y-2 fixed z-[999] right-[2rem] top-[1rem] min-w-[15vw]">
+                        @if (session('success'))
+                            <div id="flash-message" class="p-4 mb-4 text-center text-green-800 bg-green-100 border border-green-300 rounded-lg">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div id="flash-message" class="p-4 mb-4 text-center text-red-800 bg-red-100 border border-red-300 rounded-lg">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </div>
+        <script>
+            setTimeout(function() {
+                let flashMessage = document.getElementById('flash-message');
+                if (flashMessage) {
+                    flashMessage.style.transition = 'opacity 0.5s ease';
+                    flashMessage.style.opacity = '0';
+                    setTimeout(() => flashMessage.remove(), 500);
+                }
+            }, 3000);
+        </script>
     </body>
 </html>
