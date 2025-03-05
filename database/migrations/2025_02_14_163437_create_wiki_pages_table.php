@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->string('main_image');
-            $table->text('content');
+            $table->longText('content');
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
             $table->softDeletes();

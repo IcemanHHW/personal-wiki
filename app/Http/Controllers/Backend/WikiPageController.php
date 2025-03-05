@@ -44,10 +44,10 @@ class WikiPageController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $data = $request->validate([
-            'is_featured' => ['boolean'],
-            'title' => ['required', 'string'],
+            'is_featured' => ['present', 'boolean',],
+            'title' => ['required', 'string', 'min:3', 'max:100',],
             'main_image' => ['required', 'image'],
-            'content' => ['required'],
+            'content' => ['required', 'string', 'min:100', 'max:4294967296',],
         ]);
 
         try {
@@ -89,10 +89,10 @@ class WikiPageController extends Controller
     public function update(Request $request, WikiPage $wikiPage) : RedirectResponse
     {
         $data = $request->validate([
-            'is_featured' => ['boolean'],
-            'title' => ['required', 'string'],
+            'is_featured' => ['present', 'boolean',],
+            'title' => ['required', 'string', 'min:3', 'max:100',],
             'main_image' => ['nullable', 'image'],
-            'content' => ['required'],
+            'content' => ['required', 'string', 'min:100', 'max:4294967296',],
         ]);
 
         try {
