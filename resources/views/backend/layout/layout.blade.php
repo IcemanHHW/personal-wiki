@@ -16,7 +16,7 @@
                     <li class="mb-4">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="hover:bg-gray-700 p-2 rounded">Uitloggen</button>
+                            <button class="hover:bg-gray-700 p-2 rounded cursor-pointer">{{ __('app.logout') }}</button>
                         </form>
                     </li>
                 </ul>

@@ -28,13 +28,13 @@ class SessionController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
-                'username' => 'Je gebruikersnaam of wachtwoord is incorrect'
+                'email' => 'Deze gegevens zijn niet incorrect'
             ]);
         }
 

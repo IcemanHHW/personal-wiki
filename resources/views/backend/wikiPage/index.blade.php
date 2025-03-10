@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="flex justify-end mb-4">
-        <a class="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600" href="{{ route('wiki-pages.create') }}">Nieuwe Wiki pagina</a>
+        <a class="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600" href="{{ route('wiki-pages.create') }}">{{ __('app.model.create', ['model' => strtolower(__('wiki_page.model'))]) }}</a>
     </div>
     <div class="w-full bg-white rounded-lg shadow-md">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-800 text-white">
                 <tr>
-                    <th class="py-3 px-6 text-left">Titel</th>
-                    <th class="py-3 px-6 text-center">Uitgelicht</th>
-                    <th class="py-3 px-6 text-center">Acties</th>
+                    <th class="py-3 px-6 text-left">{{ __('wiki_page.label.title') }}</th>
+                    <th class="py-3 px-6 text-center">{{ __('wiki_page.label.is_featured') }}</th>
+                    <th class="py-3 px-6 text-center">{{ __('app.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,12 +33,12 @@
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <div class="flex items-center justify-center space-x-2">
-                                    <a class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600" href="{{ route('wiki-pages.edit', $wikiPage) }}">Aanpassen</a>
-                                    <form method="POST" action="{{ route('wiki-pages.destroy', $wikiPage) }}" onsubmit="return confirm('Weet je zeker dat je deze pagina wilt verwijderen?');">
+                                    <a class="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600" href="{{ route('wiki-pages.edit', $wikiPage) }}">{{ __('app.delete') }}</a>
+                                    <form method="POST" action="{{ route('wiki-pages.destroy', $wikiPage) }}" onsubmit="return confirm('{{ __('app.model.delete_confirm', ['model' => $wikiPage->title]) }}');">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded cursor-pointer hover:bg-red-600">
-                                            Verwijderen
+                                            {{ __('app.delete') }}
                                         </button>
                                     </form>
                                 </div>
@@ -47,7 +47,7 @@
                     @endforeach
                 @else
                     <tr class="border-t">
-                        <td class="py-3 px-6">Er zijn nog geen pagina's</td>
+                        <td class="py-3 px-6">{{ __('pagination.no_items_found', ['model' => strtolower(__('wiki_page.models'))]) }}</td>
                     </tr>
                 @endif
             </tbody>

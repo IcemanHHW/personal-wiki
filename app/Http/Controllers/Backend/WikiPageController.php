@@ -48,6 +48,11 @@ class WikiPageController extends Controller
             'title' => ['required', 'string', 'min:3', 'max:100',],
             'main_image' => ['required', 'image'],
             'content' => ['required', 'string', 'min:100', 'max:4294967296',],
+        ],[], [
+            'is_featured' => __('wiki_page.label.is_featured'),
+            'title' => __('wiki_page.label.title'),
+            'main_image' => __('wiki_page.label.main_image'),
+            'content' => __('wiki_page.label.content'),
         ]);
 
         try {
@@ -58,14 +63,14 @@ class WikiPageController extends Controller
 
             $data['main_image'] = $request->file('main_image')->store('wikiPage-images', 'public');
 
-            WikiPage::query()->create($data);
+           $wikiPage =  WikiPage::query()->create($data);
 
         } catch (Exception $e) {
             logger($e);
-            return redirect()->back()->with('error', 'Er is een fout opgetreden bij het opslaan van de pagina.');
+            return redirect()->back()->with('error', __('app.model.error', ['model' => __('wiki_page.model')]));
         }
 
-        return redirect()->route('wiki-pages.index')->with('success', 'Wiki pagina succesvol aangemaakt!');
+        return redirect()->route('wiki-pages.index')->with('success', __('app.model.created', ['model' => $wikiPage->title]));
     }
 
     /**
@@ -93,6 +98,11 @@ class WikiPageController extends Controller
             'title' => ['required', 'string', 'min:3', 'max:100',],
             'main_image' => ['nullable', 'image'],
             'content' => ['required', 'string', 'min:100', 'max:4294967296',],
+        ],[], [
+            'is_featured' => __('wiki_page.label.is_featured'),
+            'title' => __('wiki_page.label.title'),
+            'main_image' => __('wiki_page.label.main_image'),
+            'content' => __('wiki_page.label.content'),
         ]);
 
         try {
@@ -112,10 +122,10 @@ class WikiPageController extends Controller
 
         } catch (Exception $e) {
             logger($e);
-            return redirect()->back()->with('error', 'Er is een fout opgetreden bij het bijwerken van de pagina.');
+            return redirect()->back()->with('error', __('app.model.error', ['model' => $wikiPage->title]));
         }
 
-        return redirect()->route('wiki-pages.index')->with('success',  $wikiPage->title .' succesvol bijgewerkt!');
+        return redirect()->route('wiki-pages.index')->with('success',  __('app.model.updated', ['model' => $wikiPage->title]));
     }
 
     /**
@@ -129,6 +139,6 @@ class WikiPageController extends Controller
         $title = $wikiPage->title;
         $wikiPage->delete();
 
-        return redirect()->route('wiki-pages.index')->with('success', $title . ' succesvol verwijderd!');
+        return redirect()->route('wiki-pages.index')->with('success', __('app.model.deleted', ['model' => $title]));
     }
 }

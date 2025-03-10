@@ -5,7 +5,7 @@
 ])
 
 <div class="flex justify-start mb-4">
-    <a class="bg-gray-500 text-white py-2 px-6 rounded hover:bg-gray-600" href="{{ route('wiki-pages.index') }}">Terug</a>
+    <a class="bg-gray-500 text-white py-2 px-6 rounded hover:bg-gray-600" href="{{ route('wiki-pages.index') }}">{{ __('app.back') }}</a>
 </div>
 
 <form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-6">
@@ -14,7 +14,7 @@
         @method($method)
     @endif
     <div>
-        <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900">Uitgelicht</label>
+        <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900">{{ __('wiki_page.label.is_featured') }}</label>
         <input type="hidden" name="is_featured" value="0" />
         <input
             type="checkbox"
@@ -24,9 +24,10 @@
             class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
             {{ old('is_featured', $data->is_featured ?? false) ? 'checked' : '' }}
         />
+        <x-input-error :messages="$errors->get('is_featured')" />
     </div>
     <div>
-        <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Titel</label>
+        <label for="title" class="block mb-2 text-sm font-medium text-gray-900">{{ __('wiki_page.label.title') }}</label>
         <input
             type="text"
             name="title"
@@ -35,9 +36,10 @@
             required
             class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         />
+        <x-input-error :messages="$errors->get('title')" />
     </div>
     <div>
-        <label for="main_image" class="block mb-2 text-sm font-medium text-gray-900">Afbeelding</label>
+        <label for="main_image" class="block mb-2 text-sm font-medium text-gray-900">{{ __('wiki_page.label.main_image') }}</label>
         @if (!empty($data?->main_image))
             <div class="mb-3">
                 <img src="{{ asset('storage/' . $data->main_image) }}" alt="Huidige afbeelding" class="w-32 h-32 object-cover rounded">
@@ -49,15 +51,17 @@
             type="file"
             class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         />
+        <x-input-error :messages="$errors->get('main_image')" />
     </div>
     <div>
-        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">Content</label>
+        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">{{ __('wiki_page.label.content') }}</label>
         <textarea
             name="content"
             id="content"
             required
             class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         >{{ old('content', $data->content ?? '') }}</textarea>
+        <x-input-error :messages="$errors->get('content')" />
     </div>
     <div>
         <button

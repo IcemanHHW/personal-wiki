@@ -12,10 +12,10 @@
                 <a href="/" class="text-xl font-semibold">Character Wiki</a>
                 <div>
                     @auth
-                        <a href="{{ route('wiki-pages.index') }}" class="text-blue-600 hover:underline">Dashboard</a>
+                        <a href="{{ route('wiki-pages.index') }}" class="text-blue-600 hover:underline">{{ __('app.dashboard') }}</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-blue-600 hover:underline mr-4">Inloggen</a>
-                        <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Registreren</a>
+                        <a href="{{ route('login') }}" class="text-blue-600 hover:underline mr-4">{{ __('app.login') }}</a>
+                        <a href="{{ route('register') }}" class="text-blue-600 hover:underline">{{ __('app.register') }}</a>
                     @endauth
                 </div>
             </div>
