@@ -1,8 +1,8 @@
 @extends('backend.layout.layout')
 
 @section('content')
-    @include('backend.wikiPage.partials.form', [
-    'action' => route('wiki-pages.store'),
+    @include('backend.page.partials.form', [
+    'action' => route('pages.store'),
     'method' => 'POST',
     'data' => null,
 ])

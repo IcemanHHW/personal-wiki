@@ -40,7 +40,7 @@ class SessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('wiki-pages.index');
+        return redirect()->route('pages.index');
     }
 
     /**

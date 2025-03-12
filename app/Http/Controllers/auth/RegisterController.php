@@ -40,6 +40,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('wiki-pages.index');
+        return redirect()->route('pages.index');
     }
 }

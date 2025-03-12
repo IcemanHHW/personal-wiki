@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'model' => 'Wiki pagina',
-    'models' => 'Wiki pagina\'s',
+    'model' => 'Pagina',
+    'models' => 'Pagina\'s',
 
     'label' => [
         'is_featured' => 'Uitgelicht',

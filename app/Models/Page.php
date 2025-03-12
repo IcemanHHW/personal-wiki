@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
  * @property Carbon|null $updated_at
  */
 
-class WikiPage extends Model
+class Page extends Model
 {
     use SoftDeletes;
 
@@ -27,9 +27,9 @@ class WikiPage extends Model
     {
         parent::boot();
 
-        static::saving(function (self $wikiPage) {
-            if ($wikiPage->isDirty('title')) {
-                $wikiPage->slug = static::generateUniqueSlug($wikiPage->title, $wikiPage->id);
+        static::saving(function (self $page) {
+            if ($page->isDirty('title')) {
+                $page->slug = static::generateUniqueSlug($page->title, $page->id);
             }
         });
     }

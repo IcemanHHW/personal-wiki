@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\auth\SessionController;
 use App\Http\Controllers\auth\RegisterController;
-use App\Http\Controllers\Backend\WikiPageController;
+use App\Http\Controllers\Backend\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,5 +16,5 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [SessionController::class, 'store']);
 });
 
-Route::resource('wiki-pages', WikiPageController::class)->except('show')->middleware('auth');
+Route::resource('pages', PageController::class)->except('show')->middleware('auth');
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->middleware('auth');
