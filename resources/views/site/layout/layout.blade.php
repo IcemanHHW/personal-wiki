@@ -10,9 +10,13 @@
         <header class="bg-gray-200 p-4 shadow-sm">
             <div class="container mx-auto flex justify-between items-center">
                 <a href="/" class="text-xl font-semibold">Character Wiki</a>
-                <div>
+                <div class="flex items-center gap-4">
                     @auth
                         <a href="{{ route('pages.index') }}" class="text-blue-600 hover:underline">{{ __('app.dashboard') }}</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="text-blue-600 hover:underline cursor-pointer">{{ __('app.logout') }}</button>
+                        </form>
                     @else
                         <a href="{{ route('login') }}" class="text-blue-600 hover:underline mr-4">{{ __('app.login') }}</a>
                         <a href="{{ route('register') }}" class="text-blue-600 hover:underline">{{ __('app.register') }}</a>

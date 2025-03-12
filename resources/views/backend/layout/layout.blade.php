@@ -10,13 +10,11 @@
         <div class="flex h-screen">
             <div class="w-64 bg-gray-800 text-white p-5">
                 <ul>
-                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 1</a></li>
-                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 2</a></li>
-                    <li class="mb-4"><a href="#" class="hover:bg-gray-700 p-2 rounded">Link 3</a></li>
-                    <li class="mb-4">
+                    <li class="mb-4 w-full"><a href="/" class="hover:bg-gray-700 p-2 rounded w-full inline-block">Wiki</a></li>
+                    <li class="mb-4 w-full">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="hover:bg-gray-700 p-2 rounded cursor-pointer">{{ __('app.logout') }}</button>
+                            <button class="hover:bg-gray-700 p-2 rounded cursor-pointer w-full text-left">{{ __('app.logout') }}</button>
                         </form>
                     </li>
                 </ul>
