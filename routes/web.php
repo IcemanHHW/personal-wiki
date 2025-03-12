@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\auth\SessionController;
-use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Site\WikiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('site.index');
-});
+Route::get('/', [WikiController::class, 'index'])->name('wiki.home');
+Route::get('/wiki/{page}', [WikiController::class, 'show'])->name('wiki.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisterController::class, 'create'])->name('register');

@@ -10,8 +10,8 @@
         <div class="flex h-screen">
             <div class="w-64 bg-gray-800 text-white p-5">
                 <ul>
-                    <li class="mb-4 w-full"><a href="/" class="hover:bg-gray-700 p-2 rounded w-full inline-block">Wiki</a></li>
-                    <li class="mb-4 w-full">
+                    <li class="mb-4"><a href="{{ route('wiki.home') }}" class="hover:bg-gray-700 p-2 rounded w-full block">Wiki</a></li>
+                    <li class="mb-4">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button class="hover:bg-gray-700 p-2 rounded cursor-pointer w-full text-left">{{ __('app.logout') }}</button>

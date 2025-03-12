@@ -13,27 +13,34 @@
             </button>
         </div>
     </form>
-
-    <div class="bg-gray-50 p-4 rounded-lg border flex items-center space-x-4">
-        <img src="https://picsum.photos/200/150"
-             alt="Uigelicht"
-             class="w-32 h-24 object-cover rounded-lg shadow-md">
-        <div>
-            <h2 class="text-lg font-semibold">Uitgelicht</h2>
-            <a href="#" class="text-blue-600 hover:underline text-xl font-bold">
-               Blablablabla
-            </a>
-            <p class="text-sm text-gray-700 mt-1">
-                Blablablabla Blablablabla Blablablabla Blablablabla Blablablabla Blablablabla Blablablabla Blablablabla
-            </p>
+    @if($featuredPage)
+        <div class="bg-gray-50 p-4 rounded-lg border">
+            <h2 class="text-2xl font-semibold">Uitgelicht</h2>
+            <div class="flex items-center space-x-4 mt-2 mb-2">
+                <img src="{{ asset('storage/' . $featuredPage->main_image) }}"
+                     alt="{{ $featuredPage->title }}"
+                     class="w-32 h-24 object-cover rounded-lg shadow-md">
+                <div>
+                    <a href="/wiki/{{ $featuredPage->slug }}" class="text-blue-600 hover:underline text-xl font-bold">
+                        {{ $featuredPage->title }}
+                    </a>
+                    <p class="text-gray-700 mt-1 mb-1">
+                        {{ Str::limit($featuredPage->content, 400) }}
+                    </p>
+                    <a href="/wiki/{{ $featuredPage->slug }}" class="text-blue-600 hover:underline uppercase font-bold">Meer lezen</a>
+                </div>
+            </div>
         </div>
-    </div>
+    @endif
 
-    <div class="mt-6">
-        <h2 class="text-lg font-semibold mb-2">Nieuwste pagina's</h2>
-        <ul class="list-disc pl-5 space-y-1 text-sm">
-            <li><a href="#" class="text-blue-600 hover:underline"> Blablablabla</a></li>
-            <li><a href="#" class="text-blue-600 hover:underline"> Blablablabla</a></li>
-        </ul>
-    </div>
+    @if($latestPages->isNotEmpty())
+        <div class="mt-6">
+            <h2 class="text-2xl font-semibold mb-2">Nieuwste pagina's</h2>
+            <ul class="list-disc pl-5 space-y-1">
+                @foreach($latestPages as $latestPage)
+                    <li><a href="/wiki/{{ $latestPage->slug }}" class="text-blue-600 hover:underline">{{ $latestPage->title }}</a></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 @endsection
