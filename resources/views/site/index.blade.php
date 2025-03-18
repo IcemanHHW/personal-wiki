@@ -17,7 +17,7 @@
         <div class="bg-gray-50 p-4 rounded-lg border">
             <h2 class="text-2xl font-semibold">Uitgelicht</h2>
             <div class="flex items-center space-x-4 mt-2 mb-2">
-                <img src="{{ asset('storage/' . $featuredPage->main_image) }}"
+                <img src="/{{ $featuredPage->main_image }}"
                      alt="{{ $featuredPage->title }}"
                      class="w-32 h-24 object-cover rounded-lg shadow-md">
                 <div>

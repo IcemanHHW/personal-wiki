@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'model' => 'Page',
-    'models' => 'Pages',
+    'model' => 'page',
+    'models' => 'pages',
 
     'label' => [
         'is_featured' => 'Featured',

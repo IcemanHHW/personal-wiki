@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'model' => 'Pagina',
-    'models' => 'Pagina\'s',
+    'model' => 'pagina',
+    'models' => 'pagina\'s',
 
     'label' => [
         'is_featured' => 'Uitgelicht',

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex justify-end mb-4">
-        <a class="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600" href="{{ route('pages.create') }}">{{ __('app.model.create', ['model' => strtolower(__('page.model'))]) }}</a>
+        <a class="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600" href="{{ route('pages.create') }}">{{ __('app.model.create', ['model' => __('page.model')]) }}</a>
     </div>
     <div class="w-full bg-white rounded-lg shadow-md">
         <table class="min-w-full table-auto">
@@ -47,7 +47,7 @@
                     @endforeach
                 @else
                     <tr class="border-t">
-                        <td class="py-3 px-6">{{ __('pagination.no_items_found', ['model' => strtolower(__('page.models'))]) }}</td>
+                        <td class="py-3 px-6">{{ __('pagination.no_items_found', ['model' => __('page.models')]) }}</td>
                     </tr>
                 @endif
             </tbody>

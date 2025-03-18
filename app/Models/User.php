@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -39,7 +40,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -52,5 +52,10 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function pages() : hasMany
+    {
+        return $this->hasMany(Page::class);
     }
 }

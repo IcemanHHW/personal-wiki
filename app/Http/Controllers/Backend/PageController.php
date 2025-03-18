@@ -20,7 +20,8 @@ class PageController extends Controller
      */
     public function index() : View
     {
-        $pages = Page::query()->get();
+        $user = auth()->user();
+        $pages = Page::query()->where('user_id', $user->id)->get();
 
         return view('backend.page.index', compact('pages'));
     }
@@ -63,7 +64,10 @@ class PageController extends Controller
 
             $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
 
-           $page =  Page::query()->create($data);
+           $page =  Page::query()->create([
+               ...$data,
+               'user_id' => $request->user()->id,
+           ]);
 
         } catch (Exception $e) {
             logger($e);

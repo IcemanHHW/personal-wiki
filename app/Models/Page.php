@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -77,4 +78,8 @@ class Page extends Model
         return $query->where('is_featured', true);
     }
 
+    public function user() : belongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

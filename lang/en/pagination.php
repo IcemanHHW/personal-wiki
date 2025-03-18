@@ -15,6 +15,6 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
-    'no_items_found' => 'There are no :model yet',
+    'no_items_found' => 'You have not created any :model yet',
 
 ];

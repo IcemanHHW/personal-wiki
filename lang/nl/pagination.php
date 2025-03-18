@@ -15,6 +15,6 @@ return [
 
     'previous' => '&laquo; Vorige',
     'next' => 'Volgende &raquo;',
-    'no_items_found' => 'Er zijn nog geen :model',
+    'no_items_found' => 'Je hebt nog geen :model aangemaakt',
 
 ];
