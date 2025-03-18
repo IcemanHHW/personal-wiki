@@ -58,8 +58,6 @@
         <textarea
             name="content"
             id="content"
-            required
-            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         >{{ old('content', $data->content ?? '') }}</textarea>
         <x-input-error :messages="$errors->get('content')" />
     </div>
@@ -72,3 +70,6 @@
         </button>
     </div>
 </form>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/44.3.0/ckeditor5.umd.js" crossorigin></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/44.3.0/translations/nl.umd.js" crossorigin></script>

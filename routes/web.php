@@ -16,5 +16,6 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [SessionController::class, 'store']);
 });
 
+Route::post('/upload-image', [PageController::class, 'uploadImage'])->name('upload.image')->middleware('auth');
 Route::resource('pages', PageController::class)->except('show')->middleware('auth');
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->middleware('auth');

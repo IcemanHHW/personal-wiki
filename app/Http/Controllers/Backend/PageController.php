@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class PageController extends Controller
 {
@@ -41,14 +45,15 @@ class PageController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request) : RedirectResponse
     {
         $data = $request->validate([
             'is_featured' => ['present', 'boolean',],
             'title' => ['required', 'string', 'min:3', 'max:100',],
-            'main_image' => ['required', 'image'],
-            'content' => ['required', 'string', 'min:100', 'max:4294967296',],
+            'main_image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'content' => ['required', 'string', 'min:5', 'max:4294967296',],
         ],[], [
             'is_featured' => __('page.label.is_featured'),
             'title' => __('page.label.title'),
@@ -61,6 +66,10 @@ class PageController extends Controller
                 Page::where('is_featured', true)->update(['is_featured' => false]);
                 $data['is_featured'] = true;
             }
+
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
+            $data['content'] = $purifier->purify($data['content']);
 
             $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
 
@@ -94,13 +103,14 @@ class PageController extends Controller
      * @param Request $request
      * @param Page $page
      * @return RedirectResponse
+     * @throws ValidationException
      */
     public function update(Request $request, Page $page) : RedirectResponse
     {
         $data = $request->validate([
             'is_featured' => ['present', 'boolean',],
             'title' => ['required', 'string', 'min:3', 'max:100',],
-            'main_image' => ['nullable', 'image'],
+            'main_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'content' => ['required', 'string', 'min:100', 'max:4294967296',],
         ],[], [
             'is_featured' => __('page.label.is_featured'),
@@ -119,6 +129,11 @@ class PageController extends Controller
                 if ($page->main_image) {
                     Storage::disk('public')->delete($page->main_image);
                 }
+
+                $config = HTMLPurifier_Config::createDefault();
+                $purifier = new HTMLPurifier($config);
+                $data['content'] = $purifier->purify($data['content']);
+
                 $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
             }
 
@@ -144,5 +159,26 @@ class PageController extends Controller
         $page->delete();
 
         return redirect()->route('pages.index')->with('success', __('app.model.deleted', ['model' => $title]));
+    }
+
+    /**
+     * Handle the CKEditor image upload request and store the uploaded image.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'upload' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
+
+        $image = $request->file('upload');
+        $path = $image->store('images', 'public');
+
+        return response()->json([
+            'url' => asset('storage/' . $path),
+        ]);
     }
 }
