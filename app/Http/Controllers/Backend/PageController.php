@@ -11,8 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use HTMLPurifier;
-use HTMLPurifier_Config;
+use App\Services\HtmlSanitizerService;
 
 class PageController extends Controller
 {
@@ -47,7 +46,7 @@ class PageController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request, HtmlSanitizerService $sanitizer) : RedirectResponse
     {
         $data = $request->validate([
             'is_featured' => ['present', 'boolean',],
@@ -67,9 +66,7 @@ class PageController extends Controller
                 $data['is_featured'] = true;
             }
 
-            $config = HTMLPurifier_Config::createDefault();
-            $purifier = new HTMLPurifier($config);
-            $data['content'] = $purifier->purify($data['content']);
+            $data['content'] = $sanitizer->sanitize($data['content']);
 
             $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
 
@@ -105,7 +102,7 @@ class PageController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function update(Request $request, Page $page) : RedirectResponse
+    public function update(Request $request, Page $page, HtmlSanitizerService $sanitizer) : RedirectResponse
     {
         $data = $request->validate([
             'is_featured' => ['present', 'boolean',],
@@ -130,9 +127,7 @@ class PageController extends Controller
                     Storage::disk('public')->delete($page->main_image);
                 }
 
-                $config = HTMLPurifier_Config::createDefault();
-                $purifier = new HTMLPurifier($config);
-                $data['content'] = $purifier->purify($data['content']);
+                $data['content'] = $sanitizer->sanitize($data['content']);
 
                 $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
             }

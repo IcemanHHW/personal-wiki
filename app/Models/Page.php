@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 /**
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
  * @property string $title
  * @property string $slug
  * @property string $main_image
+ * @property boolean $is_featured
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -32,6 +34,13 @@ class Page extends Model
             if ($page->isDirty('title')) {
                 $page->slug = static::generateUniqueSlug($page->title, $page->id);
             }
+            if ($page->isDirty('is_featured')) {
+                Cache::forget('featured_page');
+            }
+        });
+
+        static::created(function() {
+            Cache::forget('latest_pages');
         });
     }
 
@@ -55,7 +64,6 @@ class Page extends Model
 
         return $count ? "{$slug}-{$count}" : $slug;
     }
-
 
     /**
      * Get the route key for the model.
