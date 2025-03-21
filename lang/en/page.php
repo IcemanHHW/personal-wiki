@@ -10,4 +10,6 @@ return [
         'main_image' => 'Main image',
         'content' => 'Content',
     ],
+
+    'author' => 'author',
 ];

@@ -1,10 +1,11 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @theme {
   --font-sans:
-    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Open Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
@@ -17,6 +18,15 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+    /* Set Lora as default font family */
+    body {
+        font-family: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+    /* Ensure all text elements inherit this font */
+    h1, h2, h3, h4, h5, h6, p, span, div, a {
+        font-family: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+
   *,
   ::after,
   ::before,

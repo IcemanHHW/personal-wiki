@@ -33,7 +33,7 @@ class WikiController extends Controller
      */
     public function show(Page $page): View
     {
-        $page->load('user:id,name');
+        $page->load('user:id,username');
 
         return view('site.show', compact('page'));
     }

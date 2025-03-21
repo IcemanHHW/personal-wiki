@@ -8,6 +8,7 @@ return [
         'deleted' => ':model is verwijderd',
         'error' => 'Er ging iets fout bij het verwerken van :model, probeer het opnieuw',
         'delete_confirm' => 'Weet je zeker dat je :model wilt verwijderen?',
+        'newest' => 'Nieuwste :model',
     ],
 
     'back' => 'Terug',

@@ -8,6 +8,7 @@ return [
         'deleted' => ':model deleted',
         'error' => 'Something went wrong while processing :model, please try again',
         'delete_confirm' => 'Are you sure you want to delete :model?',
+        'newest' => 'Nieuwste :model',
     ],
 
     'back' => 'Back',
