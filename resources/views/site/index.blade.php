@@ -4,12 +4,12 @@
         <h1 class="text-3xl font-bold">Blablabla</h1>
     </div>
     <img src="https://picsum.photos/1200/400" alt="Wiki Image" class="w-full h-64 object-cover rounded-lg mb-6">
-    <form action="#" method="GET" class="mb-6">
+    <form action="{{ route('search.results') }}" method="GET" class="mb-6">
         <div class="flex">
-            <input type="text" name="q" placeholder="Zoeken placeholder"
+            <input type="text" name="q" required placeholder="Zoeken placeholder"
                    class="w-full p-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700">
-                Zoeken
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 cursor-pointer">
+                {{ __('search.search_button') }}
             </button>
         </div>
     </form>
@@ -27,7 +27,7 @@
                     <p class="text-gray-700 mt-1 mb-1">
                         {!! Str::limit($featuredPage->content, 400) !!}
                     </p>
-                    <a href="/wiki/{{ $featuredPage->slug }}" class="text-blue-600 hover:underline uppercase font-bold">Meer lezen</a>
+                    <a href="{{ route('wiki.show', $featuredPage->slug) }}" class="text-blue-600 hover:underline uppercase font-bold">Meer lezen</a>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <h2 class="text-2xl font-semibold mb-2">Nieuwste pagina's</h2>
             <ul class="list-disc pl-5 space-y-1">
                 @foreach($latestPages as $latestPage)
-                    <li><a href="/wiki/{{ $latestPage->slug }}" class="text-blue-600 hover:underline">{{ $latestPage->title }}</a></li>
+                    <li><a href="{{ route('wiki.show', $latestPage->slug) }}" class="text-blue-600 hover:underline">{{ $latestPage->title }}</a></li>
                 @endforeach
             </ul>
         </div>
