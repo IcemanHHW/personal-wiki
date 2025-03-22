@@ -25,7 +25,6 @@
                     <p class="text-gray-700 mt-1 mb-1">
                         {!! Str::limit($featuredPage->content, 400) !!}
                     </p>
-                    <a href="{{ route('wiki.show', $featuredPage->slug) }}" class="text-blue-600 hover:underline uppercase font-bold">Meer lezen</a>
                 </div>
             </div>
         </div>

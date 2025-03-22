@@ -11,5 +11,5 @@ return [
         'content' => 'Inhoud',
     ],
 
-    'author' => 'Auteur',
+    'character_of' => 'Character van',
 ];

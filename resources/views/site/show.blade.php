@@ -28,7 +28,7 @@
 
         <div class="mt-6 flex items-center justify-between border-t pt-4">
             <div class="flex items-center">
-                <span class="font-semibold text-gray-700">{{ __('page.author') }}:</span>
+                <span class="font-semibold text-gray-700">{{ __('page.character_of') }}:</span>
                 <span class="ml-2 text-gray-900">{{ $page->user->username }}</span>
             </div>
         </div>

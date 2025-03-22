@@ -1,4 +1,7 @@
 @extends('site.layout.layout')
+
+@section('title', __('app.login') . ' - Character Wiki')
+
 @section('content')
     <form method="POST" action="{{ route('login') }}" enctype="application/x-www-form-urlencoded" class="space-y-6">
         @csrf

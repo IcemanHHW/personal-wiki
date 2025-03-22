@@ -1,5 +1,7 @@
 @extends('backend.layout.layout')
 
+@section('title', ucfirst(__('page.models')) . ' - Character Wiki Backend')
+
 @section('content')
     <div class="flex justify-end mb-4">
         <a class="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600" href="{{ route('pages.create') }}">{{ __('app.model.create', ['model' => __('page.model')]) }}</a>

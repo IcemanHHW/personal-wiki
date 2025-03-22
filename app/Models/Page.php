@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -30,6 +31,10 @@ class Page extends Model
     {
         parent::boot();
 
+        static::created(function() {
+            Cache::forget('latest_pages');
+        });
+
         static::saving(function (self $page) {
             if ($page->isDirty('title')) {
                 $page->slug = static::generateUniqueSlug($page->title, $page->id);
@@ -39,8 +44,8 @@ class Page extends Model
             }
         });
 
-        static::created(function() {
-            Cache::forget('latest_pages');
+        static::deleting(function(self $page) {
+            Storage::disk('public')->delete($page->main_image);
         });
     }
 
