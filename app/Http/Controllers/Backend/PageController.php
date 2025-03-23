@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePageRequest;
+use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -20,9 +23,12 @@ class PageController extends Controller
      * Display a listing of the resource.
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function index() : View
     {
+        $this->authorize(Page::class);
+
         $user = auth()->user();
         $pages = Page::query()->where('user_id', $user->id)->get();
 
@@ -36,41 +42,34 @@ class PageController extends Controller
      */
     public function create() : View
     {
+        $this->authorize('create', Page::class);
+
         return view('backend.page.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StorePageRequest $request
+     * @param HtmlSanitizerService $sanitizer
      * @return RedirectResponse
-     * @throws ValidationException
      */
-    public function store(Request $request, HtmlSanitizerService $sanitizer) : RedirectResponse
+    public function store(StorePageRequest $request, HtmlSanitizerService $sanitizer) : RedirectResponse
     {
-        $data = $request->validate([
-            'is_featured' => ['present', 'boolean',],
-            'title' => ['required', 'string', 'min:3', 'max:100',],
-            'main_image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'content' => ['required', 'string', 'min:5', 'max:4294967296',],
-        ],[], [
-            'is_featured' => __('page.label.is_featured'),
-            'title' => __('page.label.title'),
-            'main_image' => __('page.label.main_image'),
-            'content' => __('page.label.content'),
-        ]);
+        $this->authorize('create', Page::class);
 
         try {
+            $data = $request->validated();
+
             if ($request->input('is_featured')) {
                 Page::where('is_featured', true)->update(['is_featured' => false]);
                 $data['is_featured'] = true;
             }
 
             $data['content'] = $sanitizer->sanitize($data['content']);
+            $data['main_image'] = $this->handleMainImageUpload($request);
 
-            $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
-
-           $page =  Page::query()->create([
+            $page =  Page::query()->create([
                ...$data,
                'user_id' => $request->user()->id,
            ]);
@@ -91,46 +90,33 @@ class PageController extends Controller
      */
     public function edit(Page $page) : View
     {
+        $this->authorize('update', $page);
+
         return view('backend.page.edit', compact('page'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdatePageRequest $request
      * @param Page $page
+     * @param HtmlSanitizerService $sanitizer
      * @return RedirectResponse
-     * @throws ValidationException
      */
-    public function update(Request $request, Page $page, HtmlSanitizerService $sanitizer) : RedirectResponse
+    public function update(UpdatePageRequest $request, Page $page, HtmlSanitizerService $sanitizer) : RedirectResponse
     {
-        $data = $request->validate([
-            'is_featured' => ['present', 'boolean',],
-            'title' => ['required', 'string', 'min:3', 'max:100',],
-            'main_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'content' => ['required', 'string', 'min:100', 'max:4294967296',],
-        ],[], [
-            'is_featured' => __('page.label.is_featured'),
-            'title' => __('page.label.title'),
-            'main_image' => __('page.label.main_image'),
-            'content' => __('page.label.content'),
-        ]);
+        $this->authorize('update', $page);
 
         try {
+            $data = $request->validated();
+
             if ($request->input('is_featured')) {
                 Page::where('is_featured', true)->update(['is_featured' => false]);
                 $data['is_featured'] = true;
             }
 
-            if ($request->hasFile('main_image')) {
-                if ($page->main_image) {
-                    Storage::disk('public')->delete($page->main_image);
-                }
-
-                $data['content'] = $sanitizer->sanitize($data['content']);
-
-                $data['main_image'] = $request->file('main_image')->store('page-images', 'public');
-            }
+            $data['content'] = $sanitizer->sanitize($data['content']);
+            $data['main_image'] = $this->handleMainImageUpload($request, $page);
 
             $page->update($data);
 
@@ -150,10 +136,31 @@ class PageController extends Controller
      */
     public function destroy(Page $page): RedirectResponse
     {
+        $this->authorize('delete', $page);
+
         $title = $page->title;
         $page->delete();
 
         return redirect()->route('pages.index')->with('success', __('app.model.deleted', ['model' => $title]));
+    }
+
+    /**
+     * Handle image upload and replace if needed.
+     *
+     * @param Request $request
+     * @param Page|null $page
+     * @return string|null
+     */
+    private function handleMainImageUpload(Request $request, ?Page $page = null): ?string
+    {
+        if ($request->hasFile('main_image')) {
+            if ($page && $page->main_image) {
+                Storage::disk('public')->delete($page->main_image);
+            }
+            return $request->file('main_image')->store('page-images', 'public');
+        }
+
+        return $page?->main_image;
     }
 
     /**
