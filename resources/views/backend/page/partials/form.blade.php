@@ -8,24 +8,11 @@
     <a class="bg-gray-500 text-white py-2 px-6 rounded hover:bg-gray-600" href="{{ route('pages.index') }}">{{ __('app.back') }}</a>
 </div>
 
-<form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="space-y-6">
+<form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="max-w-7xl mx-auto bg-white p-6 rounded-lg space-y-6">
     @csrf
     @if($method !== 'POST')
         @method($method)
     @endif
-    <div>
-        <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.is_featured') }}</label>
-        <input type="hidden" name="is_featured" value="0" />
-        <input
-            type="checkbox"
-            name="is_featured"
-            id="is_featured"
-            value="1"
-            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-            {{ old('is_featured', $data->is_featured ?? false) ? 'checked' : '' }}
-        />
-        <x-input-error :messages="$errors->get('is_featured')" />
-    </div>
     <div>
         <label for="title" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.title') }} <span class="text-red-500">*</span></label>
         <input
@@ -37,6 +24,21 @@
             class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
         />
         <x-input-error :messages="$errors->get('title')" />
+    </div>
+    <div class="flex items-center space-x-10">
+        <label for="is_featured" class="text-sm font-medium text-gray-900">
+            {{ __('page.label.is_featured') }}
+        </label>
+        <input type="hidden" name="is_featured" value="0" />
+        <input
+            type="checkbox"
+            name="is_featured"
+            id="is_featured"
+            value="1"
+            class="rounded border-gray-300 text-blue-600 focus:ring focus:ring-blue-500"
+            {{ old('is_featured', $data->is_featured ?? false) ? 'checked' : '' }}
+        />
+        <x-input-error :messages="$errors->get('is_featured')" />
     </div>
     <div>
         <label for="game" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.game') }} <span class="text-red-500">*</span></label>
@@ -94,7 +96,7 @@
             id="main_image"
             name="main_image"
             type="file"
-            class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+            class="w-90 border border-gray-300 bg-gray-50 rounded-lg p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
         />
         <x-input-error :messages="$errors->get('main_image')" />
     </div>
