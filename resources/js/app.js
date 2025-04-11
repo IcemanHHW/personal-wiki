@@ -1,10 +1,5 @@
 import './bootstrap';
 
-/**
- * This configuration was generated using the CKEditor 5 Builder. You can modify it anytime using this link:
- * https://ckeditor.com/ckeditor-5/builder/#installation/NoNgNARATAdAzPCkDsIAcAWEBGbBODABgzThDg1QpOTmQzwFY4oQQoNGQkIA7AGySEwwbGDHCJ4gLqQ2AMwBGAQwDGeCNKA=
- */
-
 const {
     ClassicEditor,
     Alignment,

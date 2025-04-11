@@ -1,9 +1,9 @@
 @extends('site.layout.layout')
 @section('content')
     <div class="flex justify-between items-center border-b pb-3 mb-4">
-        <h1 class="text-3xl font-bold">Blablabla</h1>
+        <h1 class="text-3xl font-bold">Character Wiki</h1>
     </div>
-    <img src="https://picsum.photos/1200/400" alt="Wiki Image" class="w-full h-64 object-cover rounded-lg mb-6">
+    <img src="/homepage/homepage.jpg" alt="Wiki Image" class="w-full h-64 object-cover rounded-lg mb-6">
     <form action="{{ route('search.results') }}" method="GET" class="mb-6">
         <div class="flex">
             <input type="text" name="q" required placeholder="{{ __('search.search_placeholder') }}"
