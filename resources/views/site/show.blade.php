@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="lg:w-1/3 w-full lg:pl-6">
-                <div class="border rounded-lg bg-gray-50 p-4 shadow-md">
+                <div class="border rounded-lg bg-gray-50 p-4">
                     <h2 class="text-xl font-bold mb-4 text-center">{{ $page->title }}</h2>
                     <img src="/{{ $page->main_image }}" alt="{{ $page->title }}" class="w-full h-auto object-cover rounded mb-4">
                     <dl class="space-y-2 text-sm text-gray-800">
