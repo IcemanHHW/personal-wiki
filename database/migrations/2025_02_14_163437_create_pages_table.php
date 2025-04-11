@@ -13,6 +13,10 @@ return new class extends Migration {
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->string('slug');
+            $table->string('game');
+            $table->string('race')->nullable();
+            $table->string('class')->nullable();
+            $table->integer('age')->nullable();
             $table->string('main_image');
             $table->longText('content');
             $table->boolean('is_featured')->default(false);

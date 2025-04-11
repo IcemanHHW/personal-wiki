@@ -15,6 +15,10 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string $game
+ * @property string $race
+ * @property string $class
+ * @property int $age
  * @property string $main_image
  * @property boolean $is_featured
  * @property Carbon|null $created_at

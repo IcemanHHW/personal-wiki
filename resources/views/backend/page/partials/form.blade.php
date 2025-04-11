@@ -27,7 +27,7 @@
         <x-input-error :messages="$errors->get('is_featured')" />
     </div>
     <div>
-        <label for="title" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.title') }}</label>
+        <label for="title" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.title') }} <span class="text-red-500">*</span></label>
         <input
             type="text"
             name="title"
@@ -39,7 +39,52 @@
         <x-input-error :messages="$errors->get('title')" />
     </div>
     <div>
-        <label for="main_image" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.main_image') }}</label>
+        <label for="game" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.game') }} <span class="text-red-500">*</span></label>
+        <input
+            type="text"
+            name="game"
+            id="game"
+            value="{{ old('game', $data->game ?? '') }}"
+            required
+            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        />
+        <x-input-error :messages="$errors->get('game')" />
+    </div>
+    <div>
+        <label for="race" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.race') }}</label>
+        <input
+            type="text"
+            name="race"
+            id="race"
+            value="{{ old('race', $data->race ?? '') }}"
+            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        />
+        <x-input-error :messages="$errors->get('race')" />
+    </div>
+    <div>
+        <label for="class" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.class') }}</label>
+        <input
+            type="text"
+            name="class"
+            id="class"
+            value="{{ old('class', $data->class ?? '') }}"
+            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        />
+        <x-input-error :messages="$errors->get('class')" />
+    </div>
+    <div>
+        <label for="age" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.age') }}</label>
+        <input
+            type="number"
+            name="age"
+            id="age"
+            value="{{ old('age', $data->age ?? '') }}"
+            class="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+        />
+        <x-input-error :messages="$errors->get('age')" />
+    </div>
+    <div>
+        <label for="main_image" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.main_image') }} <span class="text-red-500">*</span></label>
         @if (!empty($data?->main_image))
             <div class="mb-3">
                 <img src="{{ asset('storage/' . $data->main_image) }}" alt="Huidige afbeelding" class="w-32 h-32 object-cover rounded">
@@ -54,7 +99,7 @@
         <x-input-error :messages="$errors->get('main_image')" />
     </div>
     <div>
-        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.content') }}</label>
+        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">{{ __('page.label.content') }} <span class="text-red-500">*</span></label>
         <textarea
             name="content"
             id="content"

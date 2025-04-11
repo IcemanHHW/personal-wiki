@@ -7,6 +7,10 @@ return [
     'label' => [
         'is_featured' => 'Uitgelicht',
         'title' => 'Titel',
+        'game' => 'Game',
+        'race' => 'Ras',
+        'class' => 'Klasse',
+        'age' => 'Leeftijd',
         'main_image' => 'Hoofd afbeelding',
         'content' => 'Inhoud',
     ],

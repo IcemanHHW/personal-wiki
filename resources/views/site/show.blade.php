@@ -21,15 +21,39 @@
                     {!! $page->content !!}
                 </div>
             </div>
-            <div class="lg:w-1/3 w-full">
-                <img src="/{{ $page->main_image }}" alt="{{ $page->title }}" class="w-full h-auto object-cover rounded-lg shadow-lg float-right ml-6 mb-6">
-            </div>
-        </div>
-
-        <div class="mt-6 flex items-center justify-between border-t pt-4">
-            <div class="flex items-center">
-                <span class="font-semibold text-gray-700">{{ __('page.character_of') }}:</span>
-                <span class="ml-2 text-gray-900">{{ $page->user->username }}</span>
+            <div class="lg:w-1/3 w-full lg:pl-6">
+                <div class="border rounded-lg bg-gray-50 p-4 shadow-md">
+                    <h2 class="text-xl font-bold mb-4 text-center">{{ $page->title }}</h2>
+                    <img src="/{{ $page->main_image }}" alt="{{ $page->title }}" class="w-full h-auto object-cover rounded mb-4">
+                    <dl class="space-y-2 text-sm text-gray-800">
+                        <div class="flex justify-between">
+                            <dt class="font-semibold">{{ __('page.character_of') }}</dt>
+                            <dd>{{ $page->user->username }}</dd>
+                        </div>
+                        <div class="flex justify-between">
+                            <dt class="font-semibold">{{ __('page.label.game') }}</dt>
+                            <dd>{{ $page->game }}</dd>
+                        </div>
+                        @if($page->race)
+                            <div class="flex justify-between">
+                                <dt class="font-semibold">{{ __('page.label.race') }}</dt>
+                                <dd>{{ $page->race }}</dd>
+                            </div>
+                        @endif
+                        @if($page->class)
+                            <div class="flex justify-between">
+                                <dt class="font-semibold">{{ __('page.label.class') }}</dt>
+                                <dd>{{ $page->class }}</dd>
+                            </div>
+                        @endif
+                        @if($page->age)
+                            <div class="flex justify-between">
+                                <dt class="font-semibold">{{ __('page.label.age') }}</dt>
+                                <dd>{{ $page->age }}</dd>
+                            </div>
+                        @endif
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
